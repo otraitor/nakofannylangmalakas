@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    
+    body{
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  margin: 0;
+  background: linear-gradient(white,rgb(161, 201, 243));
+    }
+    .remaint{
+        display: flex;
+       gap: .3em;
+     
+    }
+    .rt-container{
+        width: 40px;
+      border: 1px solid grey;
+     margin-bottom: 2rem;
+    }
+    .rt-container h3{
+        background-color: black;
+        color: white;
+       height: 30px;
+       text-align: center;
+       line-height: 30px;
+        margin: 0;
+     
+        
+    }
+    .event{
+        color:rgb(0, 0, 0);
+        border-bottom: 4px solid rgb(255, 255, 255);
+        border-radius: 0px 0px 10px 5px;
+    }
+    .desc{
+        font-size: 12px;
+        width:300px;
+    }
+    .rt-container span{
+        text-transform: capitalize;
+        font-size: 12px;
+    
+    }
+    .temptime{
+        font-size: 15px;
+        font-weight: bolder;
+        background-color: rgba(128, 128, 128, 0.652);
+        width: 300px;
+
+    }
+    
+    
+</style>
+<body>
+    <div class="img-container">
+        <img src="1.jpeg" alt="deer" width="300px">
+    </div>
+    <h1 class="event">Christmas</h1>
+    <div class="temptime"> December 25, 2021</div>
+    <div class="desc">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Laudantium, atque sapiente! Provident quos necessitatibus similique aspernatur dolor omnis repellendus cumque?</div>
+    <h1 class="temptime remain">Time Remaining</h1>
+
+    <div class="remaint">
+        <article class="rt-container">
+        <h3 class="days">02</h3>
+        <span>days</span>
+    </article>
+    <article class="rt-container">
+        <h3 class="hours">05</h3>
+        <span>hours</span>
+    </article>
+    <article class="rt-container">
+        <h3 class="mins">59</h3>
+        <span>minute</span>
+    </article>
+    <article class="rt-container">
+        <h3 class="sec">08</h3>
+        <span>seconds</span>
+    </article>
+    </div>
+    <script>
+        const months= [
+            'January',
+            'February',
+            'March',
+            'April',
+            'May',
+            'June',
+            'July',
+            'August',
+            'September',
+            'October',
+            'November',
+            'December',
+        ];
+        const weekdays=[
+        'Sunday',
+        'Monday',
+        'Tuesday',
+        'Wednesday',
+        'Thursday',
+        'Friday',
+        'Saturday',
+        ]
+       const temptime = document.querySelector(".temptime");
+       const rtime = document.querySelectorAll(".rt-container h3");
+     
+        let remainingtime =()=>{
+
+            const christmastime = new Date(2021,11,25,0,0);
+            const year = christmastime.getFullYear();
+            const date = christmastime.getDate();
+            const month = christmastime.getMonth();
+            const days = christmastime.getDay();
+            temptime.innerHTML = `${months[month]} ${date}, ${year} ${weekdays[days]}.`;
+
+            const currdate = new Date();
+            let t = christmastime - currdate;
+            
+            const daycal = 24*60*60*1000;
+            const hourcal = 60*60*1000;
+            const minute = 60*1000;
+            
+            let rday = t / daycal;
+            rday = Math.floor(rday);
+            let rhour =Math.floor((t % daycal)/hourcal);
+            let rminute =Math.floor( (t% hourcal)/minute);
+            let rsec = Math.floor((t%minute)/1000);
+
+           const remaint = [rday,rhour,rminute,rsec];
+           
+         rtime.forEach((items,index)=>{
+            if(remaint[index]< 10){
+                return items.textContent =  `0${remaint[index]}`;
+
+            }
+            else{
+                return items.textContent =  `${remaint[index]}`;
+            }
+            
+            })
+
+            if(t < 0 ){
+                const remain = document.querySelector(".remain");
+                remain.textContent = 'CHRIsTMASS !!!!!!';
+                clearInterval(intervals1);
+                remain.style.fontSize ="13px";
+                remain.style.color="yellow"
+                
+            }
+
+        };
+        
+        let intervals1 = setInterval(remainingtime,1000);
+
+        remainingtime();
+    </script>
+</body>
+</html>
